@@ -57,7 +57,7 @@ class HobbiesValidator implements Validator {
   constructor(protected readonly minLength: number) {}
 
   isValid({ hobbies }: Things): boolean {
-      console.log(`hobbies.length`, hobbies.length)
+    console.log(`hobbies.length`, hobbies.length);
     return hobbies != null && hobbies.length > this.minLength;
   }
 }
@@ -66,4 +66,24 @@ const validators = [new ColorsValidator(), new HobbiesValidator(1)];
 const isValid = validators.every((validators) => validators.isValid(things));
 console.warn(isValid);
 
-// typy specjalne 38
+// typy specjalne
+// Partial<Nazwa> wszystkie properties są opcjonalne
+
+function getThingsPartial(things: Partial<Things>): string {
+  return `${things.hobbies} ${things.colors}`;
+}
+
+function getThingsRequired(things: Required<Things>): string {
+  return `${things.hobbies} ${things.colors}`;
+}
+
+console.log(
+  `getThingsPartial`,
+  getThingsPartial({ hobbies: ["book", "TV", "JS"] })
+);
+
+// TS wymaga wszystkiego
+console.log(
+  `getThingsRequired({ hobbies: ['1','2','3']})`,
+  getThingsRequired(things)
+);
